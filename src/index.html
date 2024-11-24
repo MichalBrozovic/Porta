@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../src/fonts.css" />
+  <link rel="stylesheet" href="../src/styles.min.css" />
+
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script type="text/javascript" src=" ../src/js/scripts.js"></script>
+
+  <link rel="icon" type="image/png" href="../public/favicon/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="../public/favicon/favicon.svg" />
+  <link rel="shortcut icon" href="../public/favicon/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../public/favicon/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="OEKOPLAN" />
+  <link rel="manifest" href="../public/favicon/site.webmanifest" />
+  <title>OEKOPLAN</title>
+</head>
+
+<body class="">
+  <header class="header bg-color_primary">
+    <div class="border-color_border_secondary border-b upper">
+      <div class="container">
+        <div class="flex justify-between items-center gap-8">
+          <ul class="flex justify-start items-center gap-[33px]" aria-label="External links" role="navigation"
+            id="external-links" x-data="{
+                    links: [
+                        { title: 'oekoplan.cz', url: '/oekoplan.cz', target: '', active: true },
+                        { title: 'eprukaz.cz', url: '/eprukaz.cz', target: '_blank', active: false }
+                    ]
+                }">
+            <template x-for="link in links" :key="link.url">
+              <li class="flex">
+                <a :href="link.url" :target="link.target" :class="{ 'active': link.active }" x-text="link.title"
+                  class="small-nav text-color_flag text-sm/7 pt-1 pb-[10px] underline-mid before:bottom-4 before:bg-color_flag md:pt-2 md:pb-[10px]"></a>
+              </li>
+            </template>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="lower py-[27px] md:py-5">
+      <div class="container">
+        <div class="flex justify-between items-center gap-[58px] lg-2:gap-8">
+          <a href="" class="logo md:max-w-[140px]"><img src="../public/icons/logo-white.svg" alt="" /></a>
+          <div class="bg hidden"></div>
+          <nav class="ml-auto links mb-[6px]" aria-label="Navigation" role="navigation" id="links" x-data="{
+            links: [
+            { title: 'Průkazy PENB', url: '/prukazy-penb.cz', target: '_blank', active: false },
+            { title: 'Energetické posudky', url: '/energeticke-posudky', target: '_self', active: false },
+            { title: 'O nás', url: '/o-nas', target: '_self', active: false },
+            { title: 'Kariéra', url: '/kariera', target: '_self', active: false }
+        ],
+        currentUrl: window.location.pathname,
+        isActive(link) {
+            return link.url === this.currentUrl;
+        },
+        windowWidth: window.innerWidth,
+        get arrowColor() {
+            return this.windowWidth >= 1024 ? 'green' : 'dark'; // Měníme barvu šipky na základě šířky okna
+        },
+        get shouldAddContactLink() {
+            return this.windowWidth < 768; // Přidáme odkaz na kontakty pouze pokud je šířka obrazovky pod 768px
+        }
+        }" x-init="window.addEventListener('resize', () => windowWidth = window.innerWidth)">
+            <h2 class="sr-only">Navigace</h2>
+            <span class="nav-before-span hidden"></span>
+            <ul class="flex justify-end items-center gap-[50px] flex-row flex-nowrap lg:flex-col lg:gap-3 lg:items-start">
+              <template x-for="link in links" :key="link.url">
+                  <li>
+                      <a :href="link.url" :target="link.target"
+                          :class="{
+                              'active': isActive(link), 
+                              'blank-arrow': link.target === '_blank', 
+                              [arrowColor]: link.target === '_blank'
+                          }" 
+                          x-text="link.title"
+                          class="font-medium inline-block text-color_font_invert text-base/[1.26] underline-mid before:bg-color_font_invert
+                          lg:text-h3/[1.8] lg:text-color_primary lg:text-left lg:font-bold">
+                      </a>
+                  </li>
+              </template>
+      
+              <!-- Podmíněně přidáme odkaz na Kontakty pokud je šířka obrazovky menší než 768px -->
+              <template x-if="shouldAddContactLink">
+                  <li>
+                      <a href="#"
+                          class="font-medium inline-block text-color_font_invert text-base/[1.26] underline-mid before:bg-color_font_invert
+                          lg:text-h3/[1.8] lg:text-color_primary lg:text-left lg:font-bold">
+                          Kontakty
+                      </a>
+                  </li>
+              </template>
+          </ul>
+            <div class="contact-holder hidden lg:flex lg:flex-col lg:gap-2 lg:mt-auto">
+              <a href="tel:+420 549 241 370" class="tel">+420 549 241 370</a>
+              <a href="mailto:oekoplan@oekoplan.cz" class="mail">oekoplan@oekoplan.cz</a>
+            </div>
+          </nav>
+
+
+          <a href="" class="btn btn-secondary phone lg:ml-auto md:hidden"><span>Kontakt</span></a>
+          <a href="#" class="btn btn-primary hamburger hidden lg:flex"><span>Menu</span></a>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <section class="bg-color_primary rounded-bl-[40px] rounded-br-[40px] pb-16 overflow-hidden mb-8 md:pb-[21px]">
+      <div class="container">
+        <h1 class="animate-text mt-[51px] w-full max-w-[900px] mb-[106px] sm:pr-[82px] xs:pr-0 md:mb-[68px] md:mt-[34px]">Dokazujeme,
+          že šetrnost k přírodě je
+          <strong>ekonomicky výhodná</strong>
+        </h1>
+        <div class="flex justify-between flex-row gap-[23px] items-stretch flex-wrap ">
+          <div
+            class="certificate flex flex-row items-stretch justify-between flex-nowrap border border-color_border rounded-[26px] w-full p-[0px_50px_0px_60px] max-w-[57.5%] 2xl:p-[0px_30px_0px_40px] xl:max-w-[48.5%] lg:max-w-full md:p-[0px_30px_0px_30px] xs:p-[0px_12px_0px_12px]">
+            <div
+              class="text-holder flex flex-col justify-start items-start pt-[49px] pb-[58px] max-w-[265px] lg:max-w-full md:pt-[27px] md:pb-[35px] xs:pt-[18px] xs:pb-[22px]">
+              <h2 class="small text-color_font_invert font-bold mb-6 md:mb-[22px]">
+                Průkaz PENB
+              </h2>
+              <p class="text-color_flag text-xl/[1.4] mb-2 md:mb-[14px]">
+                Získejte průkaz energetické náročnosti budovy
+              </p>
+              <span class="font-medium text-color_font_invert text-26">od
+                <strong class="font-bold text-44 px-[6px] md:px-[5px]">4 598</strong>
+                Kč</span>
+              <a href="/" class="btn btn-primary arrow-top-right mt-auto text-red lg:mt-9 md:mt-7">
+                <span>Chci průkaz</span>
+              </a>
+            </div>
+            <div class="img mt-auto lg-2:mb-auto lg-2:max-w-[calc(100%-270px)] md:hidden">
+              <picture>
+                <source media="(max-width: 1200px)" srcset="../public/img/main-1-full.png" />
+                <img src="../public/img/main-1.png" alt="Průkz PENB" />
+              </picture>
+            </div>
+          </div>
+          <div class="usps flex flex-col w-full max-w-[40.4%] gap-7 xl:gap-6 xl:max-w-[48.5%] lg:max-w-full" x-data="{
+    usps: [
+      {
+        flag: 'Energetický posudek',
+        title: 'Nová zelená úsporám',
+        description: 'Snižte si rozpočet u novostavby díky dotačnímu programu NZÚ',
+        imgSrc: '../public/icons/usp-1.svg',
+        link: '/'
+      },
+      {
+        flag: 'Energetický posudek',
+        title: 'OP Životní prostředí',
+        description: 'Získejte energetický posudek pro rekonstrukci veřejné budovy',
+        imgSrc: '../public/icons/usp-2.svg',
+        link: '/'
+      },
+      {
+        flag: 'Energetický posudek',
+        title: 'OP Podnikání',
+        description: 'Snižte energetickou náročnost svého podnikání díky dotačnímu programu',
+        imgSrc: '../public/icons/usp-3.svg',
+        link: '/'
+      }
+    ]
+  }">
+            <template x-for="usp in usps" :key="usp.title">
+              <a :href="usp.link"
+                class="usp group flex flex-row justify-between items-stretch rounded-[26px] pl-[35px] pr-[30px] border border-color_border gap-4 md:pl-[33px] xs:pl-[12px]  xs:pr-[12px]">
+                <div class="text-holder relative flex flex-col gap-[10px] w-full max-w-[390px] pt-[25px] pb-[27px]">
+                  <span
+                    class="flag tracking-[0.02em] text-xs p-[4px_12px_4px_12px] rounded-[60px] bg-color_flag absolute left-0 -top-3"
+                    x-text="usp.flag"></span>
+                  <h3 x-text="usp.title" class="arrow-right text-color_font_invert font-bold"></h3>
+                  <p x-text="usp.description" class="text-base/[1.375] text-color_flag"></p>
+                </div>
+                <div
+                  class="img-holder-usp relative flex flex-row items-center justify-start w-full max-w-[106px] min-w-[100px] pl-11 xl:min-w-0 xl:max-w-[83px] xl:pl-5 lg:hidden">
+                  <img :src="usp.imgSrc" :alt="usp.title" />
+                </div>
+              </a>
+            </template>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+
+</html>
